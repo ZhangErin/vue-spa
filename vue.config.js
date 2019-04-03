@@ -1,3 +1,5 @@
+var fs = require('fs');
+var path = require('path');
 
 module.exports = {
     baseUrl: './',
@@ -24,9 +26,12 @@ module.exports = {
         open: true,
         host: '0.0.0.0',
         port: 7007,
-        https: false,
+        https: {        
+            key: fs.readFileSync(path.resolve(__dirname, './src/ssl/2014429.key')),
+            ca: fs.readFileSync(path.resolve(__dirname, './src/ssl/2014429.pem'))
+        },
         hotOnly: false,
-        proxy: 'http://localhost:7008',
+        proxy: 'https://localhost:7008',
         before: app => { }
     },
     productionSourceMap: false,

@@ -353,10 +353,12 @@ export default {
   watch: {
     $route(to, from) {
       let flag = false;
-
-     if(Object.keys(to.query).length){
-       this.$store.commit("set_url_map",({path:to.path,query:to.query}))
-     }
+      if(to.meta.type ==='BLANK'){
+        if(Object.keys(to.query).length){
+            this.$store.commit("set_url_map",({path:to.path,query:to.query}))
+          }
+      }
+   
       if(to.meta.type==='BLANK' || !to.meta.type){
         for (let item of this.openedTabs) {
                 if (item.name === to.meta.title) {

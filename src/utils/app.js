@@ -111,7 +111,7 @@ export const app = {
 
                 break;
             default:
-            
+                debugger;
                 openedTabs = vm.$store.state.openedTabs;
              
                 if (openedTabs.filter(item => item.route === '/' + path).length) {
