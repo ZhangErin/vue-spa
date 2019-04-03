@@ -151,7 +151,8 @@ function filterAsyncRouter(asyncRouterMap) {
         
       // } else {
 
-        route.component = _import(route.component)
+      route.component = _import(route.component);
+  
 
       // } 
     }
