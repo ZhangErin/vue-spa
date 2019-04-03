@@ -30,7 +30,7 @@ export default {
   },
   mounted(){
   console.log('当前页面参数',this.$route.query);
-  console.log('当前页面参数',JSON.stringify(app.getParams()));
+
   }
 }
 </script>

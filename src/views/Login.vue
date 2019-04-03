@@ -76,7 +76,7 @@
 
                         addDynRoute(res.data.router);
 
-                         _this.$router.push({ path: '/'});
+                         _this.$router.push({ path: '/spa/spa'});
                        
                     })
 
