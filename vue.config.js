@@ -32,7 +32,7 @@ module.exports = {
         // },
         https:true,
         hotOnly: false,
-        proxy: 'https://localhost:7008',
+        proxy: 'http://localhost:7008',
         before: app => { }
     },
     productionSourceMap: false,

@@ -5,7 +5,7 @@ axios.defaults.withCredentials = true
 
 //  let base = '';
  //let base = process.env.NODE_ENV ==='production'?'https://www.awebide.com:7001':''
-let base = process.env.NODE_ENV === 'production' ? 'https://localhost:7008' : ''
+let base = process.env.NODE_ENV === 'production' ? 'http://localhost:7008' : ''
 
 export const requestLogin = params => { return axios.post(`${base}/login`, params).then(res => res.data); };
 
