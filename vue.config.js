@@ -26,10 +26,6 @@ module.exports = {
         open: true,
         host: '0.0.0.0',
         port: 7007,
-        // https: {        
-        //     key: fs.readFileSync(path.resolve(__dirname, './src/ssl/2014429.key')),
-        //     ca: fs.readFileSync(path.resolve(__dirname, './src/ssl/2014429.pem'))
-        // },
         https: true,
         disableHostCheck:true,
         hotOnly: false,
