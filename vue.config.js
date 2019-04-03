@@ -30,7 +30,8 @@ module.exports = {
         //     key: fs.readFileSync(path.resolve(__dirname, './src/ssl/2014429.key')),
         //     ca: fs.readFileSync(path.resolve(__dirname, './src/ssl/2014429.pem'))
         // },
-        https:true,
+        https: true,
+        disableHostCheck:true,
         hotOnly: false,
         proxy: 'http://localhost:7008',
         before: app => { }
