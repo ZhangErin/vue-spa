@@ -26,7 +26,7 @@ module.exports = {
         port: 7007,
         https: false,
         hotOnly: false,
-        proxy: 'https://www.awebide.com:7001',
+        proxy: 'http://localhost:7008',
         before: app => { }
     },
     productionSourceMap: false,

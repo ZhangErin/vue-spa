@@ -184,8 +184,8 @@ app.use(router.allowedMethods());
 
 app.use(require('koa-static')(__dirname + '/public'))
 //start server
-app.listen(8086, () => {
-	console.error(`服务器启动成功：localhost:${8086}`);
+app.listen(7008, () => {
+	console.error(`服务器启动成功：localhost:${7008}`);
 });
 
 
