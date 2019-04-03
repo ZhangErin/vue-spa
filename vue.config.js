@@ -16,11 +16,19 @@ module.exports = {
     //     }
     // },
 
+    // devServer: {
+    //     // proxy: 'https://www.awebide.com:7001'
+    //     proxy: 'http://localhost:8086'
+    // },
     devServer: {
-        // proxy: 'https://www.awebide.com:7001'
-        proxy: 'http://localhost:8086'
+        open: true,
+        host: '0.0.0.0',
+        port: 7007,
+        https: false,
+        hotOnly: false,
+        proxy: 'https://www.awebide.com:7001',
+        before: app => { }
     },
-    
     productionSourceMap: false,
     filenameHashing: false,
     css: {
