@@ -298,8 +298,7 @@ export default {
     },
     closeDialog(){
 
-       this.$store.commit("set_D_visible",false);
-    
+       this.$store.commit("set_D_visible",false);    
        this.$store.commit("set_active_index", this.openedTabs[this.openedTabs.length - 1].route);
        this.$router.push({ path: this.activeIndex ,query:this.URLQueryMap[this.activeIndex] ||{}});
   
