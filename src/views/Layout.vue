@@ -335,8 +335,13 @@ export default {
         this.$store.commit("set_active_index", val);
       }
     },
-     dialogVisible(){
-       return this.$store.state.dialogVisible;
+     dialogVisible: {
+        get() {
+          return this.$store.state.dialogVisible;
+        },
+        set(val) {
+          this.$store.commit("set_D_visible", val);
+        }
      },
     rightMenuData() {
        return this.$store.state.rightMenuData;

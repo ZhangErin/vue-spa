@@ -6,7 +6,9 @@ const Mock = require('mockjs')
 const app = new Koa()
 const router = new Router()
 
-
+const fs = require('fs')
+// var http = require('http');
+// var https = require('https');
 
 let Users = [];
 
@@ -106,6 +108,15 @@ router.get('/-/user/add', (ctx) => {
 //路由列表
 const routerList = [
 	{
+		"path": "open",
+		"name": "open",
+		"component": "spa/open",
+		"meta": {
+			"title": "OPEN",
+			"icon": "el-icon-goods"
+		}
+	},
+	{
 		"path": "spa",
 		"name":"spa",
 		"component": "spa/spa",
@@ -184,8 +195,16 @@ app.use(router.allowedMethods());
 
 app.use(require('koa-static')(__dirname + '/public'))
 //start server
+var options = {
+	key: fs.readFileSync('./ssl/server.key'), //ssl文件路径
+	cert: fs.readFileSync('./ssl/server.pem') //ssl文件路径
+};
+
+// http.createServer(app.callback()).listen(80);
+// https.createServer(options, app.callback()).listen(443);
+
 app.listen(7008, () => {
-	console.error(`服务器启动成功：localhost:${7008}`);
+	console.error(`服务器启动成功：7008`);
 });
 
 
