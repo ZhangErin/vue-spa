@@ -13,7 +13,7 @@
           <el-input placeholder="请输入自定义路由（相当于页面实例ID）" v-model="form.path" clearable></el-input>
         </el-form-item>
         <el-form-item label="传参">
-          <el-input placeholder="请输入对象类型数据" v-model="form.params" clearable></el-input>
+          <el-input placeholder="请输入JSON字符串" v-model="form.params" clearable></el-input>
         </el-form-item>
         <el-form-item label="类型">
           <el-radio-group v-model="form.type">
@@ -39,7 +39,7 @@ export default {
                 page:'',
                 type:'BLANK',
                 path:'',
-                params:'{ }',
+                params:'',
                 title:''
             }
         }
@@ -47,8 +47,9 @@ export default {
     methods:{
         openPage(){
             let config = this.form;
-            debugger;
-
+          
+        console.log(config.params);
+        
             app.open({
                 status:true,
                 title:config.title,
@@ -78,7 +79,7 @@ export default {
   padding: 20px;
   margin: 0 20px;
   // padding: 12px;
-  border: 1px solid #ebebeb;
+ // border: 1px solid #ebebeb;
   border-radius: 3px;
   transition: 0.2s;
   form {

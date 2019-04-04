@@ -181,7 +181,7 @@ router.get('/-/router/get', function (ctx) {
 router.post('/login', function (ctx) {
 	ctx.body = {		
 		name: 'admin',
-		avatar: 'https://vue.awebide.com:7007/img/user.png'
+		avatar: 'https://vue.awebide.com/img/user.png'
 	}
 })
 
