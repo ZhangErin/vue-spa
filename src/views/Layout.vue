@@ -13,6 +13,7 @@
       </el-col>
 
       <el-col :span="4" class="aweb-userinfo">
+
         <el-tooltip  effect="dark" content="下载案例" placement="left">
             <el-button icon="el-icon-sold-out" circle class="aweb-download-btn" @click="openMarket"></el-button>
         </el-tooltip>
@@ -42,13 +43,13 @@
           text-color="#fff"
           active-text-color="#04bebd"
           hoverbgColor ="#04bebd"
-          router
           :collapse="collapsed"
+          @select="handleSelectMenu"
         >
 
           <template v-for="item in routerData" v-if="!item.hidden">
             
-              <el-submenu  v-if="item.children && item.children.length && !item.isLeaf || (item.isLeaf && item.isRedirect)" :index="item.path" :key="item.path">
+              <el-submenu  v-if="item.children && item.children.length && !item.isLeaf || (item.isLeaf && item.isRedirect)" :index="item.path+'#'+item.componentUrl+'#'+(item.meta && item.meta.title && item.meta.title)" :key="item.path">
                 <template slot="title">
                   <i v-if="item.meta && item.meta.icon" :class="item.meta.icon"></i>
                   <span v-if="item.meta && item.meta.title">{{item.meta.title}}</span>
@@ -56,7 +57,7 @@
 
                 <template v-for="child in item.children" v-if="!child.hidden">
 
-                      <el-submenu  v-if="child.children" :index="item.path+'/'+child.path" :key="item.path+'/'+child.path">
+                      <el-submenu  v-if="child.children" :index="item.path+'/'+child.path+'#'+child.componentUrl+'#'+(child.meta && child.meta.title && child.meta.title)" :key="item.path+'/'+child.path">
                               
                                     <template slot="title">
                                       <i v-if="child.meta && child.meta.icon" :class="child.meta.icon"></i>
@@ -65,14 +66,14 @@
 
                                     <template v-for="child3 in child.children" v-if="!child3.hidden">
 
-                                            <el-submenu  v-if="child3.children" :index="item.path+'/'+child.path+'/'+child3.path+'/'+child3.children[0].path" :key="item.path+'/'+child.path+'/'+child3.path">                              
+                                            <el-submenu  v-if="child3.children" :index="item.path+'/'+child.path+'/'+child3.path+'#'+child3.componentUrl+'#'+(child3.meta && child3.meta.title && child3.meta.title)" :key="item.path+'/'+child.path+'/'+child3.path">                              
                                                     <template slot="title">
                                                       <i v-if="child3.meta && child3.meta.icon" :class="child3.meta.icon"></i>
                                                       <span v-if="child3.meta && child3.meta.title">{{child3.meta.title}}</span>
                                                     </template>
 
                                                     <template v-for="child4 in child3.children" v-if="!child4.hidden">                                         
-                                                          <el-menu-item :index="item.path+'/'+child.path+'/'+child3.path+'/'+child4.path" :key="item.path+'/'+child.path+'/'+child3.path+'/'+child4.path">
+                                                          <el-menu-item :index="item.path+'/'+child.path+'/'+child3.path+'/'+child4.path+'#'+child4.componentUrl+'#'+(child4.meta && child4.meta.title && child4.meta.title)" :key="item.path+'/'+child.path+'/'+child3.path+'/'+child4.path">
                                                             <i v-if="child4.meta && child4.meta.icon" :class="child4.meta.icon"></i>
                                                             <span v-if="child4.meta&&child4.meta.title">{{child4.meta.title}}</span>
                                                           </el-menu-item>
@@ -80,7 +81,7 @@
                                               </el-submenu>
 
 
-                                          <el-menu-item v-else :index="item.path+'/'+child.path+'/'+child3.path" :key="item.path+'/'+child.path+'/'+child3.path">
+                                          <el-menu-item v-else :index="item.path+'/'+child.path+'/'+child3.path+'#'+child3.componentUrl+'#'+(child3.meta && child3.meta.title && child3.meta.title)" :key="item.path+'/'+child.path+'/'+child3.path">
                                             <i v-if="child3.meta && child3.meta.icon" :class="child3.meta.icon"></i>
                                             <span v-if="child3.meta&&child3.meta.title">{{child3.meta.title}}</span>
                                           </el-menu-item>
@@ -91,7 +92,7 @@
                       </el-submenu>
 
 
-                    <el-menu-item v-else  :index="item.path+'/'+child.path" :key="item.path+'/'+child.path">
+                    <el-menu-item v-else  :index="item.path+'/'+child.path+'#'+child.componentUrl+'#'+(child.meta && child.meta.title && child.meta.title)" :key="item.path+'/'+child.path">
                       <i v-if="child.meta && child.meta.icon" :class="child.meta.icon"></i>
                       <span v-if="child.meta && child.meta.title" :data-role="item.path+'/'+child.path">{{child.meta.title}}</span>
                     </el-menu-item>
@@ -100,12 +101,12 @@
               </el-submenu>
 
              
-                <el-menu-item  v-else-if="item.isLeaf && !item.children[0].children"  :index="item.path+'/'+item.children[0].path" :key="item.path+'/'+item.children[0].path" >  
+                <el-menu-item  v-else-if="item.isLeaf && !item.children[0].children"  :index="item.children[0].path+'#'+item.children[0].componentUrl+'#'+(item.children[0].meta && item.children[0].meta.title && item.children[0].meta.title)" :key="item.path+'/'+item.children[0].path" >  
                   <i v-if="item.children[0].meta && item.children[0].meta.icon" :class="item.children[0].meta.icon"></i>          
                     <span v-if="item.children[0].meta && item.children[0].meta.title">{{item.children[0].meta.title}}</span>
                   </el-menu-item>
 
-                 <el-menu-item  v-else  :index="item.path" :key="item.path" >  
+                 <el-menu-item  v-else  :index="item.path+'#'+item.componentUrl+'#'+(item.meta && item.meta.title && item.meta.title)" :key="item.path" >  
                   <i v-if="item.meta && item.meta.icon" :class="item.meta.icon"></i>          
                     <span v-if="item.meta && item.meta.title">{{item.meta.title}}</span>
                   </el-menu-item>
@@ -118,27 +119,7 @@
       <section class="aweb-ctt">
         <div class="grid-content bg-purple-light">
           <div>
-             <!-- tab 右键菜单 -->
-             <!-- <div v-show="menuVisible" class="aweb-right-menu" ref="rightClickMenu">
-                <el-menu
-                   class="el-menu-vertical"
-                   @select="handleRightSelect"
-                    background-color="#545c64"
-                    text-color="#fff"
-                    active-text-color="#04bebd"
-                     >
-                  
-                  <template v-for="(mItem,idx) in rightMenuData">
-                    <el-menu-item :index="mItem.key" class="menuItem" :key="idx">
-                    <span slot="title">{{mItem.name}}</span>
-                     </el-menu-item>
-                  </template>
-                   
-                </el-menu>
-            </div> -->
-
-          
-         <!-- tab 右键菜单end -->
+  
             <el-tabs
               v-model="activeIndex"
               type="border-card"
@@ -156,15 +137,11 @@
                 :name="item.route"
               >
               <el-col :span="24" class="aweb-ctt-wrap">
-                <!-- <el-col :span="24" class="breadcrumb-container">
-                  <el-breadcrumb separator="/" class="breadcrumb-inner">
-                    <el-breadcrumb-item v-for="item in $route.matched" :key="item.path">{{ item.name }}</el-breadcrumb-item>
-                  </el-breadcrumb>
-                </el-col> -->
-                <transition name="fade" mode="out-in" v-if="activeIndex===item.route" > 
+         
+                <transition name="fade" mode="out-in" v-if="activeIndex===item.route"> 
                  
-                      <router-view v-if="isRouterAlive" ></router-view>
-                  
+                      <router-view v-if="isRouterAlive"></router-view>
+                 
                 </transition>
               </el-col>
          
@@ -173,9 +150,10 @@
 
           </div>
               <!-- 子页面容器 -->
-              <el-dialog :visible.sync='dialogVisible' @close="closeDialog">
-                <transition name="fade" mode="out-in">
-                  <router-view></router-view>
+              <el-dialog   :title="subPageTitle" :visible.sync='dialogVisible' @close="closeDialog">
+                <transition name="fade" mode="out-in" v-if="dialogVisible">
+                  <!-- <router-view></router-view> -->
+                  <async-component :page="subPageHref" :params="subPageParams"></async-component>
                 </transition>           
                 <div slot='footer' class='dialog-footer'>
                 <el-button @click="cancel">取消</el-button>
@@ -192,15 +170,15 @@
 <script>
 
 import {getObjArr, getRouter,saveRouter} from '../promission.js'
-import { app } from '@/utils/app.js'
-import rightMenu from '@/components/rightMenu'
 
+import rightMenu from '@/components/rightMenu'
+import asyncComponent from '@/components/asyncComponent'
 
 export default {
   name:'layout',
   data() {
     return {
-      routerData:global.antRouter?global.antRouter:getRouter(),
+      routerData:global.menu?global.menu:getRouter('menu'),
       sysLogo:"img/logo.png",
       sysName: "AWEB_ADMIN",
       collapsed: false,
@@ -208,9 +186,29 @@ export default {
       sysUserAvatar: "https://s.gravatar.com/avatar/f30a9191dda93b5389965ed99f57f850?s=50&d=retro",  
       rightClickHandler:null,
       isRouterAlive: true
+
     };
   },
   methods: {
+    handleSelectMenu:function(key, keyPath){
+       console.log('key',key);
+
+      let keys = key.split('#'),
+          path = keys[0],
+          page = keys[1],
+          title= keys[2];
+
+
+       this.open({
+         path:'/'+path,
+         page:page,
+         status:true,
+         type:'BLANK',
+         title:title||'标题'
+       })
+
+
+    },
     tabRightClick:function(e){
        if(e.target.classList[0] ==='el-tabs__item'){
 
@@ -259,7 +257,10 @@ export default {
           sessionStorage.removeItem("user");
           _this.$router.push("/login");
            saveRouter('router','');
-           saveRouter('menuRouter','');
+           saveRouter('menu','');
+           global.antRouter = '';
+          global.pageMap = {};
+          global.hasLogin = false;
         })
         .catch(() => {});
     },
@@ -289,18 +290,21 @@ export default {
            this.$store.commit("set_active_index", this.openedTabs[this.openedTabs.length - 1].route);
            this.$router.push({ path: this.activeIndex,query:this.URLQueryMap[this.activeIndex] ||{} });
            this.$store.commit("do_cancel");
+           this.isRouterAlive = true;
     },
     confirm(){
          this.$store.commit("set_D_visible",false);
           this.$store.commit("set_active_index", this.openedTabs[this.openedTabs.length - 1].route);
           this.$router.push({ path: this.activeIndex,query:this.URLQueryMap[this.activeIndex] ||{} });
           this.$store.commit("do_confirm");
+          this.isRouterAlive = true;
     },
     closeDialog(){
 
        this.$store.commit("set_D_visible",false);    
        this.$store.commit("set_active_index", this.openedTabs[this.openedTabs.length - 1].route);
        this.$router.push({ path: this.activeIndex ,query:this.URLQueryMap[this.activeIndex] ||{}});
+       this.isRouterAlive = true;
   
     },
     openMarket(){
@@ -308,7 +312,7 @@ export default {
     }
   },
   mounted() {
-
+    console.log('routerData',this.routerData)
     let user = sessionStorage.getItem("user");
     if (user) {
       user = JSON.parse(user);
@@ -319,12 +323,15 @@ export default {
      this.$store.commit("add_tabs", {
         route: this.$route.path,
         name: this.$route.meta.title,
-        id:app.getUID()
+        id:this.getUID()
       });
-      this.$store.commit("set_active_index", this.$route.path);
+    
+  this.$store.commit("set_active_index", this.$route.path);
+
   },
   computed: {
     openedTabs() {
+
       return this.$store.state.openedTabs;
     },
     activeIndex: {
@@ -343,6 +350,30 @@ export default {
           this.$store.commit("set_D_visible", val);
         }
      },
+     subPageHref: {
+        get() {
+          return this.$store.state.subPageHref;
+        },
+        set(val) {
+          this.$store.commit("set_subPageHref", val);
+        }
+     },
+    subPageParams: {
+        get() {
+          return this.$store.state.subPageParams;
+        },
+        set(val) {
+          this.$store.commit("set_subPageParams", val);
+        }
+     },
+     subPageTitle:{
+       get() {
+          return this.$store.state.subPageTitle;
+        },
+        set(val) {
+          this.$store.commit("set_subPageTitle", val);
+        }
+     },
     rightMenuData() {
        return this.$store.state.rightMenuData;
     },
@@ -358,6 +389,8 @@ export default {
   watch: {
     $route(to, from) {
       let flag = false;
+
+      console.log(this.isRouterAlive);
       if(to.meta.type ==='BLANK'){
         if(Object.keys(to.query).length){
             this.$store.commit("set_url_map",({path:to.path,query:to.query}))
@@ -389,12 +422,22 @@ export default {
           this.$store.commit("set_active_index",to.path);
           this.$store.commit("delete_tabs", from.path);
        
+      }else if(to.meta.type==='SUB'){
+        this.isRouterAlive = false;
+        // this.$nextTick(()=>{
+		    //    this.isRouterAlive = true;
+        //   });
+     
+          console.log(this.activeIndex);
+          console.log(this.openedTabs);
+
       }
      
     }
   },
   components:{
-    rightMenu
+    rightMenu,
+    asyncComponent
   }
 };
 </script>
@@ -541,7 +584,8 @@ export default {
               padding: 0;
            }
            .el-tabs__item:focus, 
-           .el-tabs__item:focus:active{
+           .el-tabs__item:focus:active,
+           .el-tabs__item:active:focus{
                  outline: none;
                 outline-color: transparent;
            }

@@ -2,7 +2,7 @@
   <div class="aweb-open-page">
     <h3>打开指定页面</h3>
     <el-row class="aweb-open-page-form">
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form ref="form" :model="form" label-width="100px">
          <el-form-item label="页面标题">
           <el-input placeholder="请输入" v-model="form.title" clearable></el-input>
         </el-form-item>
@@ -11,6 +11,16 @@
         </el-form-item>
          <el-form-item label="自定义路由">
           <el-input placeholder="请输入自定义路由（相当于页面实例ID）" v-model="form.path" clearable></el-input>
+        </el-form-item>
+         <el-form-item label="是否其他项目">
+    
+        <el-switch
+            v-model="form.other"
+            active-color="#13ce66"
+            inactive-color="#dcdfe6">
+          </el-switch>
+
+     
         </el-form-item>
         <el-form-item label="传参">
           <el-input placeholder="请输入JSON字符串" v-model="form.params" clearable></el-input>
@@ -31,7 +41,8 @@
   </div>
 </template>
 <script>
-import { app } from '@/utils/app.js'
+
+
 export default {
     data(){
         return {
@@ -40,23 +51,22 @@ export default {
                 type:'BLANK',
                 path:'',
                 params:'',
-                title:''
+                title:'',
+                other:false
             }
         }
     },
     methods:{
         openPage(){
             let config = this.form;
-          
-        console.log(config.params);
-        
-            app.open({
+             
+            this.open({
                 status:true,
                 title:config.title,
                 page:config.page,
                 path:config.path,
-                vm:this,
                 type:config.type,
+                other:config.other,
                 params:config.params ? JSON.parse(config.params):'',
                 confirmCallback:() => {
                   console.log('点击确定')

@@ -4,17 +4,21 @@ import App from './App'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+
 import router from './router'
 
 import './utils/global.js'
 import './promission.js'
 
 Vue.config.productionTip = false
-
+// global.systemjs = systemjs;
 
 import store from './store'
 
+//全局混入通用app接口
+import mixin from '@/utils/app.js'
 
+Vue.mixin(mixin);
 
 
 Vue.use(ElementUI)

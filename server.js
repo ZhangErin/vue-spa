@@ -5,6 +5,7 @@ KoaBody({ multipart: true })
 const Mock = require('mockjs')
 const app = new Koa()
 const router = new Router()
+const shell = require('shelljs')
 
 const fs = require('fs')
 // var http = require('http');
@@ -26,7 +27,7 @@ for (let i = 0; i < 66; i++) {
 //获取用户列表
 router.get('/-/user/list', (ctx) => {
 	let { name } = ctx.request.query;
-	console.log(name)
+
 	let mockUsers = Users.filter(user => {
 		if (name && user.name.indexOf(name) == -1) return false;
 		return true;
@@ -107,15 +108,15 @@ router.get('/-/user/add', (ctx) => {
 });
 //路由列表
 const routerList = [
-	{
-		"path": "open",
-		"name": "open",
-		"component": "spa/open",
-		"meta": {
-			"title": "OPEN",
-			"icon": "el-icon-goods"
-		}
-	},
+		{
+			"path": "open",
+			"name": "open",
+			"component": "spa/open",
+			"meta": {
+				"title": "OPEN",
+				"icon": "el-icon-goods"
+			}
+		},
 	{
 		"path": "spa",
 		"name":"spa",
@@ -126,49 +127,56 @@ const routerList = [
 		}
 	},
 	{
-		"path": "table",
-		"name": "table",
+		"path": "case",
+		"name": "case",
 		"meta": {
-			"title": "表格",
+			"title": "案例",
 			"icon": "el-icon-tickets"
 		},
 		"children": [
 			{
-				"path": "subPage",
-				"name": "subPage",
+				"path": "table",
+				"name": "table",
 				"component": "example/table",
 				"meta": {
 					"title": "表格",
 					"icon": "el-icon-goods"
 				}
-			},
-			{
-				"path": "newPage",
-				"name": "newPage",
-				"component": "example/newPage",
+			}, {
+				"path": "rightMenu",
+				"name": "rightMenu",
+				"component": "example/rightMenu",
 				"meta": {
-					"title": "子节点",
-					"icon": "el-icon-goods"
+					"title": "右键菜单",
+					"icon": "el-icon-menu"
+				}
+			}, {
+				"path": "form",
+				"name": "form",
+				"component": "form/form",
+				"meta": {
+					"title": "表单",
+					"icon": "el-icon-setting"
+				}
+			}, {
+				"path": "hasSubTab",
+				"name": "hasSubTab",
+				"component": "example/hasSubTab",
+				"meta": {
+					"title": "嵌套子页面",
+					"icon": "el-icon-setting"
+				}
+			}, {
+				"path": "dycSubTab",
+				"name": "dycSubTab",
+				"component": "example/dycSubTab",
+				"meta": {
+					"title": "动态子页面",
+					"icon": "el-icon-setting"
 				}
 			}
+			
 		]
-	}, {
-		"path": "tree",
-		"name": "tree",
-		"component": "example/tree",
-		"meta": {
-			"title": "树形",
-			"icon": "el-icon-menu"
-		}
-	},
-	{
-		"path": "index",
-		"name": "index",
-		"component": "form/form",
-		"meta": {
-			"title": "表单",
-			"icon": "el-icon-setting"
-		}
 	}
 ];
 
@@ -186,6 +194,53 @@ router.post('/login', function (ctx) {
 })
 
 
+router.get('/-/gitlog/get', function (ctx) {
+	let _cmd = `git log --pretty=format:"%h - %an, %ar : %s"`;
+	//let t = `git log  --pretty=format:'{"commit": "%h","author": "%an","date": "%ad","message": "%s"}'`
+  
+	ctx.body = {
+		gitlog: new Promise((resolve, reject) => {
+			shell.exec(_cmd, (code, stdout, stderr) => {
+				console.log(stdout);
+				if (code) {
+					reject(stderr)
+				} else {
+					resolve(JSON.parse(stdout)[0])
+				}
+			})
+		})
+	}
+})
+
+router.get('/-/getMainList', function (ctx) {
+
+	var mainList = {
+	
+			"result": [{
+				"name": "AWEB 社区",
+				"href": "https://www.awebide.com/"
+			}, {
+				"name": "AWEB 开发者中心",
+				"href": "https://docs.awebide.com"
+			}, {
+				"name": "资源市场",
+				"href": "https://market.awebide.com"
+			}, {
+				"name": "桌面示例",
+				"href": "https://pc.awebide.com"
+			}, {
+				"name": "监控示例",
+				"href": "https://monitor.awebide.com"
+			}, {
+				"name": "移动示例",
+				"href": "https://mobile.awebide.com"
+			}]
+		
+	};
+	ctx.body = mainList;
+})
+
+
 //parser
 app.use(KoaBody());
 
@@ -195,10 +250,10 @@ app.use(router.allowedMethods());
 
 app.use(require('koa-static')(__dirname + '/public'))
 //start server
-var options = {
-	key: fs.readFileSync('./ssl/server.key'), //ssl文件路径
-	cert: fs.readFileSync('./ssl/server.pem') //ssl文件路径
-};
+// var options = {
+// 	key: fs.readFileSync('./ssl/server.key'), //ssl文件路径
+// 	cert: fs.readFileSync('./ssl/server.pem') //ssl文件路径
+// };
 
 // http.createServer(app.callback()).listen(80);
 // https.createServer(options, app.callback()).listen(443);

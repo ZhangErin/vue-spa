@@ -8,6 +8,9 @@ export default new Vuex.Store({
     openedTabs: [], //所有打开的路由
     activeIndex: '', //激活状态
     dialogVisible: false,
+    subPageHref:'',
+    subPageParams: '',
+    subPageTitle:'',
     cancelCallback: '',
     confirmCallback: '',
     URLQueryMap:{},
@@ -25,7 +28,6 @@ export default new Vuex.Store({
   mutations: {
     // 添加tabs
     add_tabs(state, data) {
-      
       global.pageMap[data.route] = true;
       this.state.openedTabs.push(data);
     },
@@ -44,7 +46,8 @@ export default new Vuex.Store({
       this.state.openedTabs = [];
     },
     // 设置当前激活的tab
-    set_active_index (state, index) {
+    set_active_index(state, index) {
+   
       this.state.activeIndex = index;
     },
     set_url_map(state, tab) {
@@ -62,6 +65,15 @@ export default new Vuex.Store({
     },
     do_confirm() {
       this.state.confirmCallback();
+    },
+    set_subPageHref(state, herf) {
+      this.state.subPageHref = herf;
+    },
+    set_subPageParams(state, params) {
+      this.state.subPageParams = params;
+    },
+    set_subPageTitle(state, title) {
+       this.state.subPageTitle = title;
     }
   },
   actions: {

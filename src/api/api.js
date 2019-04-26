@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 axios.defaults.withCredentials = true
-
-
+global.$axios = axios;
 //  let base = '';
  //let base = process.env.NODE_ENV ==='production'?'https://www.awebide.com:7001':''
 let base = process.env.NODE_ENV === 'production' ? 'http://localhost:7008' : ''
@@ -20,3 +19,5 @@ export const editUser = params => { return axios.get(`${base}/-/user/edit`, { pa
 export const addUser = params => { return axios.get(`${base}/-/user/add`, { params: params }); };
 
 export const getUserListPage = params => { return axios.get(`${base}/-/user/listpage`, { params: params }); };
+
+export const getMainList = params => { return axios.get(`${base}/-/getMainList`, { params: params }); };

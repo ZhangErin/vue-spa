@@ -1,16 +1,14 @@
 <template>
 	<section>
-	
 		<el-row class="aweb-app-info">
 		<h3>打开新页面</h3>
 		<pre>
-	app.open({
+	this.open({
 		status:true,
 		title:'新增页面',
 		path:'example/add', //相当于页面的id，也是页面的路由
-		page:'example/newPage',//vue页面组件的路径
+		page:'spa/newPage',//vue页面组件的路径
 		type:'BLANK',
-		vm:this,
 		params:{
 			role:'tab页面'
 		}
@@ -25,14 +23,13 @@
 		<el-row class="aweb-app-info">
 			<h3>打开子页面</h3>
 			<pre>
-	app.open({
+	this.open({
 	  status:true,
 		title:'子页面',
 		path:'example/sub',
-		page:'example/newPage',
+		page:'spa/newSubPage',
 		type:'SUB',
 		params:{id:'12'},
-		vm:this,//必填,子页面需要附带传递当前调用的页面上下文
 		confirmCallback:() => { 
 			console.log('点击确定')
 		},
@@ -50,10 +47,10 @@
 		<el-row class="aweb-app-info">
 			<h3>打开新窗口页面</h3>
 			<pre>
-	app.open({
+	this.open({
 		status:true,
 		title:'window页面',
-		page:'example/newPage',
+		page:'spa/newPage',
 		type:'WINDOW'
 	})
 			</pre>
@@ -65,13 +62,12 @@
 		<el-row class="aweb-app-info">
 		<h3>打开自身页面</h3>
 	     <pre>
-	 app.open({
+	 this.open({
 		 status:true,
 		 title:'自身页面',
 		 path:'example/self',
-		 page:'example/newPage',
-		 type:'SELF',
-		 vm:this
+		 page:'spa/newPage',
+		 type:'SELF'
 	 })
 		</pre>
 		</el-row>
@@ -83,9 +79,7 @@
 	   		<el-row class="aweb-app-info">
 		<h3>关闭当前页面</h3>
 	     <pre>
-     app.close({
-         vm:this
-       });
+     this.close();
 		</pre>
 		</el-row>
 	   <el-row class="aweb-app-btn-ctn last">
@@ -95,9 +89,8 @@
 	   		<el-row class="aweb-app-info">
 		<h3>关闭指定页面</h3>
 	     <pre>
-     app.close({
-         vm:this,
-		 path:'example/add'
+     this.close({
+		   path:'example/add'
        });
 		</pre>
 		</el-row>
@@ -107,7 +100,6 @@
 	</section>
 </template>
 <script>
-import { app } from '@/utils/app.js'
 
 	export default {
 		data() {
@@ -117,12 +109,11 @@ import { app } from '@/utils/app.js'
 		},
 		methods: {
 			openNewPage(){
-					app.open({
+					this.open({
 						status:true,
 						title:'新增页面',
 						path:'example/add',
-						page:'example/newPage',
-						vm:this,
+						page:'spa/newPage',
 						type:'BLANK',
 						params:{
 							role:'参数1'
@@ -130,37 +121,33 @@ import { app } from '@/utils/app.js'
 					})
 			},
 			openNewPage2(){
-					app.open({
+					this.open({
 						status:true,
 						title:'编辑页面',
 						path:'example/edit',
-						page:'example/newPage',
+						page:'spa/newPage',
 						type:'BLANK',
-						vm:this,
 						params:{
 							id:'相同页面组件不同页面实例'
 						}
 					})
 			},
 			closeAddPage(){
-				app.close({
-						vm:this,
+				this.close({
 						path:'example/add'
 					});
 			},
 			closeCurrentPage(){
-                app.close({
-						vm:this
-					});
+                this.close();
 			},
 			openSubPage(){
-						app.open({
+						this.open({
 							status:true,
 							title:'子页面',
 							path:'example/sub',
-							page:'example/newPage',
+							page:'spa/newSubPage',
+							params:{id:'1212'},
 							type:'SUB',
-							vm:this,//必填
 							confirmCallback:() => {
 								console.log('点击确定')
 							},
@@ -171,10 +158,10 @@ import { app } from '@/utils/app.js'
 				
 			},
 			openWindowPage(){
-					app.open({
+					this.open({
 								status:true,
 								title:'window页面',
-								page:'example/newPage',
+								page:'spa/newPage',
 								type:'WINDOW',
 								params:{
 									role:'新窗口'
@@ -182,13 +169,12 @@ import { app } from '@/utils/app.js'
 							})
 			},
 			openSelfpage(){
-				  app.open({
+				  this.open({
 						status:true,
 						title:'自身页面',
 						path:'example/self',
-						page:'example/newPage',
-						type:'SELF',
-						vm:this
+						page:'spa/newPage',
+						type:'SELF'
 					})
 			}
 		},

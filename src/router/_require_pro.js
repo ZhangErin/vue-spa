@@ -1,1 +1,2 @@
-module.exports = file => () => require(`${file}.js`)
+const _require = file => () => window.systemjs.import(`${file}`);
+export default _require
