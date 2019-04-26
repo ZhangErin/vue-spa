@@ -11,7 +11,7 @@ import './utils/global.js'
 import './promission.js'
 
 Vue.config.productionTip = false
-// global.systemjs = systemjs;
+
 
 import store from './store'
 

@@ -1,4 +1,4 @@
-import Vue from 'vue'
+
 import _import from '@/router/_import_production.js'
 import _require from '@/router/_require_pro.js'
 import router from '../router'
@@ -10,17 +10,6 @@ export default {
         return {
         }
     },
-    created() {
-        // console.log('mixin...', this.name);
-    },
-    mounted() {
-        console.log('mixin');
-
-        // new Vue({
-        //     router,
-        //     render: h => h(this)
-        // }).$mount(this.$el)
-    },
     methods: {
         open(option){
                  let { status,page,path,title, type,params,confirmCallback,cancelCallback,other } = option;
@@ -30,7 +19,7 @@ export default {
                  let openedTabs;
                  if (!status) return;
             
-            let haseAdded = !routerTemp.filter(item => item.children && item.children.length && item.children[0].path === path.replace('/', '')).length;
+            let haseAdded = path && !routerTemp.filter(item => item.children && item.children.length && item.children[0].path === path.replace('/', '')).length;
             
                  switch (type) {
                      case 'SUB':
@@ -48,13 +37,13 @@ export default {
                         
                          break;
                      case 'WINDOW':
-
+                        
 
                          localStorage.setItem('openWindow', page);
 
 
                          routerUrl = window.location.origin + '/#/' + page + (params && '?params=' + JSON.stringify(params));
-
+                       
                          window.open(encodeURI(routerUrl))
 
 

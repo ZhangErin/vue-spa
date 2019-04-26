@@ -290,21 +290,21 @@ export default {
            this.$store.commit("set_active_index", this.openedTabs[this.openedTabs.length - 1].route);
            this.$router.push({ path: this.activeIndex,query:this.URLQueryMap[this.activeIndex] ||{} });
            this.$store.commit("do_cancel");
-           this.isRouterAlive = true;
+         
     },
     confirm(){
          this.$store.commit("set_D_visible",false);
           this.$store.commit("set_active_index", this.openedTabs[this.openedTabs.length - 1].route);
           this.$router.push({ path: this.activeIndex,query:this.URLQueryMap[this.activeIndex] ||{} });
           this.$store.commit("do_confirm");
-          this.isRouterAlive = true;
+      
     },
     closeDialog(){
 
        this.$store.commit("set_D_visible",false);    
        this.$store.commit("set_active_index", this.openedTabs[this.openedTabs.length - 1].route);
        this.$router.push({ path: this.activeIndex ,query:this.URLQueryMap[this.activeIndex] ||{}});
-       this.isRouterAlive = true;
+    
   
     },
     openMarket(){
@@ -422,15 +422,6 @@ export default {
           this.$store.commit("set_active_index",to.path);
           this.$store.commit("delete_tabs", from.path);
        
-      }else if(to.meta.type==='SUB'){
-        this.isRouterAlive = false;
-        // this.$nextTick(()=>{
-		    //    this.isRouterAlive = true;
-        //   });
-     
-          console.log(this.activeIndex);
-          console.log(this.openedTabs);
-
       }
      
     }
@@ -561,7 +552,7 @@ export default {
   }
    .aweb-ctt {
       flex: 1;
-      overflow-y: scroll;
+      overflow: auto;
       padding: 10px;
       .breadcrumb-container {
         .title {
@@ -578,7 +569,7 @@ export default {
         box-sizing: border-box;
       }
       .grid-content{
-          .el-tabs__content{
+           >div>div.el-tabs>.el-tabs__content{
               height: calc(100vh - 125px);
               overflow: auto;
               padding: 0;

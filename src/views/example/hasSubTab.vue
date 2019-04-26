@@ -183,7 +183,7 @@ import asyncComponent from '@/components/asyncComponent'
     methods: {
     
       handleClick(tab, event) {
-        this.$message.info(tab+event);
+        // this.$message.info(tab+event);
         this.subPageParams ="新参数啦"
         this.$refs.tablepage.reload();
       },

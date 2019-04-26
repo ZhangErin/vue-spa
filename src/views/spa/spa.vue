@@ -56,7 +56,7 @@
 			</pre>
 		</el-row>
 	   <el-row class="aweb-app-btn-ctn">
-	       <el-button type="info" @click="openWindowPage">打开新窗口页面</el-button>
+	       <el-button type="primary" @click="openWindowPage">打开新窗口页面</el-button>
 	   </el-row>
 
 		<el-row class="aweb-app-info">
@@ -158,6 +158,7 @@
 				
 			},
 			openWindowPage(){
+
 					this.open({
 								status:true,
 								title:'window页面',

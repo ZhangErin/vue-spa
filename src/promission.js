@@ -50,7 +50,7 @@ router.beforeEach((to, from, next) => {
   
   
    if (localStorage.getItem('openWindow') && localStorage.getItem('openWindow') === wpath) {
-
+  
       router.options.routes.push({
         path: '/'+wpath,
         component: _import(wpath),
@@ -68,10 +68,10 @@ router.beforeEach((to, from, next) => {
      saveRouter('router', global.antRouter);
      if (sessionStorage.getItem('user')) {
        getRoutersList().then(res => {
-
+     
          addDynRoute(res.data.router); //后台拿到路由
-
-         if (wpath) {
+        
+         if (wpath && localStorage.getItem('openWindow') !== wpath) {
     
          let cRoute = searchCurrentRouter(wpath);
 
